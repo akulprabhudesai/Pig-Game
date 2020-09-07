@@ -1,25 +1,34 @@
 
-var activePlayer, score, currentScore, isPlaying;
+var activePlayer, score, currentScore, isPlaying,old;
 
 begin();
  
+//adding event listener on button click with anonymous fn as it not to be reused anywhere else
 document.querySelector(".btn-roll").addEventListener("click", function(){
 if(isPlaying){
-	var diceDom = document.querySelector(".dice");
+ var diceDom = document.querySelector(".dice");
  var dice = Math.floor(Math.random() * 6) + 1;
+ old = dice;
+ if(old === 6 && dice === 6){
+ 	score[changePlayer] = 0;
+ 	document.getElementById("score-" + activePlayer).textContent = score[activePlayer];
+ 	changePlayer();
+ } 
  diceDom.src = "images/dice-" + dice + ".png";
  diceDom.style.display = "block";
  currentScore = currentScore + dice;
  if(dice === 1)	changePlayer();
  document.getElementById("current-" + activePlayer).textContent = currentScore;
 }	
-});
+ 
+ });
 
 document.querySelector(".btn-hold").addEventListener("click", function(){
 if(isPlaying){
 	score[activePlayer] = score[activePlayer] + currentScore;
  document.getElementById("score-" + activePlayer).textContent = score[activePlayer];
- if(score[activePlayer] >= 20){
+ document.getElementById("score-" + activePlayer).textContent = score[activePlayer];
+ if(score[activePlayer] >= 100){
   document.getElementById("name-" + activePlayer).textContent = "WINNER..!!";
   document.querySelector(".dice").style.display = "none";
   document.querySelector(".player-" + activePlayer + "-panel").classList.add("winner");
@@ -28,6 +37,7 @@ if(isPlaying){
  }
  else changePlayer();
 }	
+ 
 });
 
 
